@@ -1,0 +1,79 @@
+[
+  {
+    "id": 0,
+    "name": "Altair",
+    "organisationNr": "12309870",
+    "vatNr": "SE1234567890",
+    "reference": "test",
+    "paymentTerm": 11,
+    "website": "https://www.altair.com/",
+    "email": "altair@gmail.com",
+    "phoneNumber": "+46999776655"
+  },
+  {
+    "id": 1,
+    "name": "Altair",
+    "organisationNr": "12309870",
+    "vatNr": "SE1234567890",
+    "reference": "test",
+    "paymentTerm": 11,
+    "website": "https://www.altair.com/",
+    "email": "altair@gmail.com",
+    "phoneNumber": "+46999776655"
+  },
+  {
+    "id": 2,
+    "name": "Altair",
+    "organisationNr": "12309870",
+    "vatNr": "SE1234567890",
+    "reference": "test",
+    "paymentTerm": 11,
+    "website": "https://www.altair.com/",
+    "email": "altair@gmail.com",
+    "phoneNumber": "+46999776655"
+  },
+  {
+    "id": 3,
+    "name": "Altair",
+    "organisationNr": "12309870",
+    "vatNr": "SE1234567890",
+    "reference": "test",
+    "paymentTerm": 11,
+    "website": "https://www.altair.com/",
+    "email": "altair@gmail.com",
+    "phoneNumber": "+46999776655"
+  },
+  {
+    "id": 4,
+    "name": "Altair",
+    "organisationNr": "12309870",
+    "vatNr": "SE1234567890",
+    "reference": "test",
+    "paymentTerm": 11,
+    "website": "https://www.altair.com/",
+    "email": "altair@gmail.com",
+    "phoneNumber": "+46999776655"
+  },
+  {
+    "id": 5,
+    "name": "Altair",
+    "organisationNr": "12309870",
+    "vatNr": "SE1234567890",
+    "reference": "test",
+    "paymentTerm": 11,
+    "website": "https://www.altair.com/",
+    "email": "altair@gmail.com",
+    "phoneNumber": "+46999776655"
+  },
+  {
+    "id": 6,
+    "name": "Altair",
+    "organisationNr": "12309870",
+    "vatNr": "SE1234567890",
+    "reference": "test",
+    "paymentTerm": 11,
+    "website": "https://www.altair.com/",
+    "email": "altair@gmail.com",
+    "phoneNumber": "+46999776655"
+  }
+]
