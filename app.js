@@ -48,7 +48,7 @@ const getCustomer = (req, res) => {
 };
 
 const createCustomer = (req, res) => {
-  const newId = Customers[customers.length - 1].id + 1;
+  const newId = customers[customers.length - 1].id + 1;
   const newCustomer = Object.assign({ id: newId }, req.body);
 
   customers.push(newCustomer);
