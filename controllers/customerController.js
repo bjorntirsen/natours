@@ -4,6 +4,29 @@ const customers = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/customers-simple.json`)
 );
 
+exports.checkID = (req, res, next, val) => {
+  console.log(`The id is: ${val}`);
+  // * 1 is to convert from string to number
+  if (req.params.id * 1 > customers.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+  next();
+};
+
+exports.checkBody = (req, res, next) => {
+  //only allow customers to be created with name and email
+  if (!req.body.name || !req.body.email) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing name or email',
+    });
+  }
+  next();
+};
+
 exports.getAllCustomers = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -18,14 +41,6 @@ exports.getCustomer = (req, res) => {
   console.log(req.params);
   const id = req.params.id * 1;
   const customer = customers.find((el) => el.id === id);
-
-  //if(id > Customers.length) {
-  if (!customer) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
 
   res.status(200).json({
     status: 'success',
@@ -56,13 +71,6 @@ exports.createCustomer = (req, res) => {
 };
 
 exports.updateCustomer = (req, res) => {
-  if (req.params.id * 1 > customers.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
-
   res.status(200).json({
     status: 'success',
     data: {
@@ -72,13 +80,6 @@ exports.updateCustomer = (req, res) => {
 };
 
 exports.deleteCustomer = (req, res) => {
-  if (req.params.id * 1 > customers.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
-
   res.status(204).json({
     status: 'success',
     data: null,

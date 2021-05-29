@@ -2,10 +2,13 @@ const express = require('express');
 const customerController = require('./../controllers/customerController');
 const router = express.Router();
 
+//If theres an id param, check if it's valid
+router.param('id', customerController.checkID);
+
 router
   .route('/')
   .get(customerController.getAllCustomers)
-  .post(customerController.createCustomer);
+  .post(customerController.checkBody, customerController.createCustomer);
 
 router
   .route('/:id')
