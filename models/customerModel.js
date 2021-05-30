@@ -16,6 +16,10 @@ const customerSchema = new mongoose.Schema({
     required: [true, 'A customer must have an email.'],
   },
   phoneNumber: String,
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const Customer = mongoose.model('Customer', customerSchema);
