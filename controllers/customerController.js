@@ -1,5 +1,6 @@
 const { query } = require('express');
 const Customer = require('./../models/customerModel');
+const APIFeatures = require('./../utils/APIFeatures');
 
 //Customer.find Returns promise. Can also use .then here,
 //but i'm using async await.
@@ -7,51 +8,13 @@ const Customer = require('./../models/customerModel');
 //to check for errors.
 exports.getAllCustomers = async (req, res) => {
   try {
-    // Build Query
-
-    // 1a. Filtering
-    //Create hard copy of obj by destructuring
-    const queryObj = { ...req.query };
-    //Delete fields that will be handled elsewhere
-    const excludedFields = ['page', 'sort', 'limit', 'fields'];
-    excludedFields.forEach((el) => delete queryObj[el]);
-    // 1b. Advanced filtering
-    //Add operator to query strings
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    let query = Customer.find(JSON.parse(queryStr));
-
-    // 2. Sorting
-    if (req.query.sort) {
-      const sortBy = req.query.sort.split(',').join(' ');
-      query = query.sort(sortBy);
-    } else {
-      query = query.sort('-createdAt');
-    }
-
-    // 3. Field Limiting
-    if (req.query.fields) {
-      const fields = req.query.fields.split(',').join(' ');
-      query = query.select(fields);
-    } else {
-      query = query.select('-__v');
-    }
-
-    // 4. Pagination and limit
-    //Turn to number by * 1
-    const page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1 || 100;
-    const skip = (page - 1) * limit;
-
-    query = query.skip(skip).limit(limit);
-
-    if (req.query.page) {
-      const numCustomers = await Customer.countDocuments();
-      if(skip >= numCustomers) throw new Error('This page does not exist')
-    }
-
-    // Execute Query
-    const customers = await query;
+    console.log(req.query);
+    const features = new APIFeatures(Customer.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const customers = await features.query;
 
     res.status(200).json({
       status: 'success',
