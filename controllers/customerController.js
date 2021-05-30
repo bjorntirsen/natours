@@ -7,18 +7,27 @@ const Customer = require('./../models/customerModel');
 //to check for errors.
 exports.getAllCustomers = async (req, res) => {
   try {
-    // 1. Build Query
+    // Build Query
+    // 1a. Filtering
     //Create hard copy of obj by destructuring
     const queryObj = { ...req.query };
     //Delete fields that will be handled elsewhere
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
+    // 1b. Advanced filtering
     //Add operator to query strings
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    const query = Customer.find(JSON.parse(queryStr));
+    let query = Customer.find(JSON.parse(queryStr));
+    // 2. Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('-createdAt');
+    }
 
-    // 2. Execute Query
+    // Execute Query
     const customers = await query;
 
     res.status(200).json({
