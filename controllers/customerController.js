@@ -1,3 +1,4 @@
+const { query } = require('express');
 const Customer = require('./../models/customerModel');
 
 //Customer.find Returns promise. Can also use .then here,
@@ -6,7 +7,19 @@ const Customer = require('./../models/customerModel');
 //to check for errors.
 exports.getAllCustomers = async (req, res) => {
   try {
-    const customers = await Customer.find();
+    // 1. Build Query
+    //Create hard copy of obj by destructuring
+    const queryObj = { ...req.query };
+    //Delete fields that will be handled elsewhere
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+    //Add operator to query strings
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    const query = Customer.find(JSON.parse(queryStr));
+
+    // 2. Execute Query
+    const customers = await query;
 
     res.status(200).json({
       status: 'success',
