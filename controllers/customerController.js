@@ -1,6 +1,7 @@
-const Customer = require('./../models/customerModel');
+const Customer = require('../models/customerModel');
 const APIFeatures = require('../utils/apiFeatures');
-const catchAsync = require('./../utils/catchAsync');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/AppError');
 
 //Customer.find Returns promise. Can also use .then here,
 //but i'm using async await.
@@ -26,6 +27,10 @@ exports.getAllCustomers = catchAsync(async (req, res, next) => {
 exports.getCustomer = catchAsync(async (req, res, next) => {
   const customer = await Customer.findById(req.params.id);
 
+  if (!customer) {
+    return next(new AppError('No tour found with that ID', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -46,12 +51,16 @@ exports.createCustomer = catchAsync(async (req, res, next) => {
 });
 
 exports.updateCustomer = catchAsync(async (req, res, next) => {
-  customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+  const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
     //Return the updated customer
     new: true,
     //Run validation on the updates
     runValidators: true,
   });
+
+  if (!customer) {
+    return next(new AppError('No tour found with that ID', 404));
+  }
 
   res.status(200).json({
     status: 'success',
@@ -63,6 +72,10 @@ exports.updateCustomer = catchAsync(async (req, res, next) => {
 
 exports.deleteCustomer = catchAsync(async (req, res, next) => {
   await Customer.findByIdAndDelete(req.params.id);
+
+  if (!customer) {
+    return next(new AppError('No tour found with that ID', 404));
+  }
 
   res.status(204).json({
     status: 'success',
