@@ -71,7 +71,7 @@ exports.updateCustomer = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteCustomer = catchAsync(async (req, res, next) => {
-  await Customer.findByIdAndDelete(req.params.id);
+  const customer = await Customer.findByIdAndDelete(req.params.id);
 
   if (!customer) {
     return next(new AppError('No tour found with that ID', 404));
