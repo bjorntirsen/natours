@@ -1,10 +1,14 @@
 const express = require('express');
-const customerController = require('./../controllers/customerController');
+const customerController = require('../controllers/customerController');
+const authController = require('../controllers/authController');
+
 const router = express.Router();
+
+//statistics routes can go here
 
 router
   .route('/')
-  .get(customerController.getAllCustomers)
+  .get(authController.protect, customerController.getAllCustomers)
   .post(customerController.createCustomer);
 
 router
