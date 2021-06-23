@@ -15,6 +15,10 @@ router
   .route('/:id')
   .get(customerController.getCustomer)
   .patch(customerController.updateCustomer)
-  .delete(customerController.deleteCustomer);
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin'),
+    customerController.deleteCustomer
+  );
 
 module.exports = router;

@@ -15,7 +15,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
-    passwordChangedAt: req.body.passwordChangedAt,
+    role: req.body.role,
   });
 
   const token = signToken(newUser.id);
@@ -84,6 +84,20 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('User recently changed password, please log in again.', 401)
     );
   }
+  // Grant access
   req.user = currentUser;
   next();
 });
+
+// Middleware cannot recieve params so we return the
+// mw function
+exports.restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403)
+      );
+    }
+    next();
+  };
