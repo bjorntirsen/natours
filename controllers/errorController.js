@@ -1,4 +1,4 @@
-const AppError = require('../utils/AppError');
+const AppError = require('../utils/appError');
 
 const handleObjectIdErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}.`;

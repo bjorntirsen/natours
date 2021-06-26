@@ -1,7 +1,7 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Customer = require('./../models/customerModel');
+const Customer = require('../models/customerModel');
 
 dotenv.config({ path: './config.env' });
 
