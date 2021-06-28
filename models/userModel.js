@@ -6,45 +6,37 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'A user must have a name.'],
-    unique: true,
+    required: [true, 'Please tell us your name!'],
   },
   email: {
     type: String,
-    required: [true, 'A user must have an email.'],
+    required: [true, 'Please provide your email'],
     unique: true,
     lowercase: true,
-    validate: [validator.isEmail, 'Email not valid.'],
+    validate: [validator.isEmail, 'Please provide a valid email'],
   },
-  photo: {
-    type: String,
-  },
+  photo: String,
   role: {
     type: String,
-    enum: ['user', 'admin', 'moderator'],
+    enum: ['user', 'guide', 'lead-guide', 'admin'],
     default: 'user',
   },
   password: {
     type: String,
-    required: [true, 'A user must have a password.'],
+    required: [true, 'Please provide a password'],
     minlength: 8,
     select: false,
   },
   passwordConfirm: {
     type: String,
-    required: [true, 'A user must confirm their password.'],
+    required: [true, 'Please confirm your password'],
     validate: {
-      // Cannot use arrow function bcs this.
-      // Only works on create/save, not update.
+      // This only works on CREATE and SAVE!!!
       validator: function (el) {
         return el === this.password;
       },
-      message: 'Passwords are not the same.',
+      message: 'Passwords are not the same!',
     },
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
   },
   passwordChangedAt: Date,
   passwordResetToken: String,
@@ -57,23 +49,26 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function (next) {
-  // Only if pass was modified
+  // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();
 
+  // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
 
+  // Delete passwordConfirm field
   this.passwordConfirm = undefined;
   next();
 });
 
 userSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next();
-  // Minus one second to avoid validation bugs
+
   this.passwordChangedAt = Date.now() - 1000;
   next();
 });
 
 userSchema.pre(/^find/, function (next) {
+  // this points to the current query
   this.find({ active: { $ne: false } });
   next();
 });
@@ -87,10 +82,15 @@ userSchema.methods.correctPassword = async function (
 
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
-    const changedTimestamp = this.passwordChangedAt.getTime() / 1000;
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
     return JWTTimestamp < changedTimestamp;
   }
-  // False means not changed
+
+  // False means NOT changed
   return false;
 };
 
@@ -101,6 +101,8 @@ userSchema.methods.createPasswordResetToken = function () {
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
+
+  console.log({ resetToken }, this.passwordResetToken);
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
