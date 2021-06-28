@@ -23,7 +23,7 @@ module.exports = class Email {
     });
   }
 
-  send(template, subject) {
+  /* send(template, subject) {
     // 1) Render HTML based on a pug template
     
 
@@ -53,5 +53,5 @@ const sendEmail = async (options) => {
   };
 
   // 3) Send email
-  await transporter.sendMail(mailOptions);
+  await transporter.sendMail(mailOptions); */
 };

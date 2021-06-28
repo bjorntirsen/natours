@@ -10,7 +10,7 @@ const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const customerRouter = require('./routes/customerRoutes');
+const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
 const app = express();
@@ -69,7 +69,7 @@ app.use((req, res, next) => {
 });
 
 //Routes
-app.use('/api/v1/customers', customerRouter);
+app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
 //Perhaps add link to docs in message later.
