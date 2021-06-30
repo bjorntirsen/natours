@@ -1,13 +1,17 @@
 {
   "name": "generic-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Following the Natours course",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "start:dev": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bjorntirsen/generic-crud-api.git"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +30,7 @@
     "mongoose": "^5.12.12",
     "morgan": "^1.10.0",
     "nodemailer": "^6.6.2",
+    "pug": "^3.0.2",
     "slugify": "^1.5.3",
     "validator": "^13.6.0",
     "xss-clean": "^0.1.1"
@@ -42,6 +47,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.3.1"
   }
 }
