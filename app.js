@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
 
@@ -50,6 +51,7 @@ app.use('/api', limiter);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
 
 // Data sanitazion against NoSQL data injection
 app.use(mongoSanitize());
@@ -70,6 +72,7 @@ app.use(compression());
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   console.log(`Request made at ${req.requestTime}`);
+  console.log(req.cookies);
   next();
 });
 
