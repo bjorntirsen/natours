@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
@@ -35,9 +36,6 @@
     "slugify": "^1.5.3",
     "validator": "^13.6.0",
     "xss-clean": "^0.1.1"
-  },
-  "engines": {
-    "node": "^14"
   },
   "devDependencies": {
     "eslint": "^7.29.0",
