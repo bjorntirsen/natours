@@ -2,12 +2,13 @@
   "name": "generic-api",
   "version": "1.0.0",
   "description": "Following the Natours course",
-  "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "start:dev": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "debug": "ndb server.js"
+    "debug": "ndb server.js",
+    "watch:js": "parcel watch ./public/js/index.js --dist-dir ./public/js",
+    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,8 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "parcel": "^2.0.0-beta.3.1",
     "prettier": "^2.3.1"
-  }
+  },
+  "default": "bundle.js"
 }
