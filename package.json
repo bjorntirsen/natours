@@ -53,5 +53,8 @@
   "main": "app.js",
   "targets": {
     "main": false
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
