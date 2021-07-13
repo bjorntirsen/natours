@@ -109,6 +109,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   // Grant access
   req.user = currentUser;
+  res.locals.user = currentUser;
   next();
 });
 
