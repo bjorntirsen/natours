@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const Booking = require('../models/bookingModel');
 const factory = require('./handlerFactory');
 
-exports.getChekoutSesstion = catchAsync(async (req, res, next) => {
+exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get booked tour
   const tour = await Tour.findById(req.params.tourId);
 
