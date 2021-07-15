@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const csp = require('express-csp');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
@@ -16,6 +17,8 @@ const viewRouter = require('./routes/viewRoutes');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
+const cspConfig = require('./cspConfig');
 
 const app = express();
 
@@ -35,6 +38,7 @@ app.options('*', cors());
 
 // Set security HTTP headers
 app.use(helmet());
+csp.extend(app, cspConfig);
 
 // Dev logging
 if (process.env.NODE_ENV === 'development') {
@@ -81,6 +85,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 //Perhaps add link to docs in message later.
 app.all('*', (req, res, next) => {
