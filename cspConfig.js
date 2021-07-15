@@ -53,7 +53,7 @@ module.exports = {
         'unsafe-inline',
         'data:',
         'blob:',
-        'wss://bjorns-natours.herokuapp.com:<PORT>/',
+        `wss://bjorns-natours.herokuapp.com:${process.env.PORT}/`,
         'https://*.stripe.com',
         'https://*.mapbox.com',
         'https://*.cloudflare.com/',
