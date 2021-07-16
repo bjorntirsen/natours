@@ -14,7 +14,6 @@ module.exports = {
         'https://*.cloudflare.com/',
         'https://bundle.js:8828',
         'ws://localhost:56558/',
-        'https://bjorns-natours.herokuapp.com:*',
       ],
       'worker-src': [
         'self',
@@ -61,6 +60,7 @@ module.exports = {
         'https://bundle.js:*',
         'ws://localhost:*/',
       ],
+      'load-src': ['blob:'],
     },
   },
 };
