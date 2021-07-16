@@ -15,17 +15,6 @@ module.exports = {
         'https://bundle.js:8828',
         'ws://localhost:56558/',
       ],
-      'worker-src': [
-        'self',
-        'unsafe-inline',
-        'data:',
-        'blob:',
-        'https://*.stripe.com',
-        'https://*.mapbox.com',
-        'https://*.cloudflare.com/',
-        'https://bundle.js:*',
-        'ws://localhost:*/',
-      ],
       'frame-src': [
         'self',
         'unsafe-inline',
