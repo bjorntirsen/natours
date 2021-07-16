@@ -1,14 +1,14 @@
 module.exports = {
   policy: {
     directives: {
-      'default-src': ['self'],
+      'default-src': ['self', 'blob:'],
       'style-src': ['self', 'unsafe-inline', 'https:'],
       'font-src': ['self', 'https://fonts.gstatic.com'],
       'script-src': [
         'self',
         'unsafe-inline',
         'data',
-        'blob',
+        'blob:',
         'https://js.stripe.com',
         'https://*.mapbox.com',
         'https://*.cloudflare.com/',
